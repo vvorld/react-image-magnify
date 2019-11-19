@@ -101,6 +101,6 @@
     "prop-types": "^15.6.0",
     "react-cursor-position": "2.5.3",
     "react-required-if": "1.0.1",
-    "svg-path-canvas": "git+https://github.com/sam-xif/SVGPathCanvas.git#master"
+    "svg-path-canvas": "git+https://github.com/sam-xif/SVGPathCanvas.git#dist"
   }
 }
