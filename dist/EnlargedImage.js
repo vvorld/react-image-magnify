@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -27,6 +29,8 @@ var _Point = require('./prop-types/Point');
 var _Point2 = _interopRequireDefault(_Point);
 
 var _styles = require('./lib/styles');
+
+var _svgPathCanvas = require('svg-path-canvas');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -78,8 +82,7 @@ var _class = function (_React$Component) {
                 isActive = _props.isActive,
                 isPositionOutside = _props.isPositionOutside,
                 isLocked = _props.isLocked;
-            // eslint-disable-next-line no-console
-            //console.log(isActive);
+
 
             var willIsActiveChange = isActive !== nextProps.isActive;
             var willIsPositionOutsideChange = isPositionOutside !== nextProps.isPositionOutside;
@@ -145,6 +148,8 @@ var _class = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
+            var _this3 = this;
+
             var _props3 = this.props,
                 containerClassName = _props3.containerClassName,
                 imageClassName = _props3.imageClassName,
@@ -159,13 +164,11 @@ var _class = function (_React$Component) {
                 onError = _props3$largeImage$on2 === undefined ? _utils.noop : _props3$largeImage$on2;
 
 
-            var component = _react2.default.createElement(
-                'div',
-                {
-                    className: containerClassName,
-                    style: this.containerStyle
-                },
-                _react2.default.createElement('img', {
+            var component = _react2.default.createElement(_svgPathCanvas.OverlayImage, _extends({
+                className: containerClassName,
+                style: this.containerStyle
+            }, {
+                imageComponent: _react2.default.createElement('img', {
                     alt: alt,
                     className: imageClassName,
                     src: largeImage.src,
@@ -174,8 +177,35 @@ var _class = function (_React$Component) {
                     style: this.imageStyle,
                     onLoad: onLoad,
                     onError: onError
-                })
-            );
+                }),
+                overlayComponent: function () {
+                    var imgStyle = _this3.imageStyle;
+                    var imageCoordinates = void 0;
+
+                    var isLocked = _this3.props.isLocked;
+
+                    if (isLocked && _this3.state.lockedPosition !== null) {
+                        imageCoordinates = _this3.state.lockedPosition;
+                    } else {
+                        imageCoordinates = _this3.getImageCoordinates();
+                    }
+
+                    return _react2.default.createElement(_svgPathCanvas.PathCanvas, {
+                        pathProps: { stroke: 'red', fill: 'transparent' },
+                        paths: _this3.state.paths,
+                        onPathFinish: function onPathFinish(finishedPath, allPaths) {
+                            _this3.setState({
+                                paths: allPaths
+                            });
+                        },
+                        width: imgStyle.width,
+                        height: imgStyle.height,
+                        style: {
+                            transform: 'translate(' + imageCoordinates.x + 'px, ' + imageCoordinates.y + 'px)'
+                        }
+                    });
+                }()
+            }));
 
             if (isLazyLoaded) {
                 return this.isVisible ? component : null;

@@ -89,7 +89,7 @@ function getPriorityEnlargedImageContainerStyle(params) {
         height: containerDimensions.height,
         opacity: isTransitionActive ? 1 : 0,
         transition: 'opacity ' + fadeDurationInMs + 'ms ease-in',
-        pointerEvents: 'none'
+        pointerEvents: 'all'
     };
 }
 
@@ -141,7 +141,7 @@ export function getEnlargedImageStyle(params) {
         transform: translate,
         WebkitTransform: translate,
         msTransform: translate,
-        pointerEvents: 'none'
+        pointerEvents: 'all'
     };
 
     var compositeImageStyle = objectAssign({}, userSpecifiedStyle, priorityStyle);

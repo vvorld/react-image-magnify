@@ -222,9 +222,7 @@ var ReactImageMagnify = function (_React$Component) {
                     onLoad: this.onSmallImageLoad,
                     onError: onError,
                     onClick: function onClick() {
-                        console.log("test");
                         _this2.setState(function (prevState) {
-                            console.log('onClick');
                             prevState.isLocked = !prevState.isLocked;
                             return prevState;
                         });
