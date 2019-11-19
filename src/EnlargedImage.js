@@ -245,6 +245,12 @@ export default class extends React.Component {
 
                         return <PathCanvas
                             pathProps={{ stroke: 'red', fill: 'transparent' }}
+                            paths={this.state.paths}
+                            onPathFinish={(finishedPath, allPaths) => {
+                                this.setState({
+                                    paths: allPaths
+                                })
+                            }}
                             width={imgStyle.width}
                             height={imgStyle.height}
                             style={{
