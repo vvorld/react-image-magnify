@@ -14,6 +14,8 @@ import {
     getEnlargedImageStyle
 } from './lib/styles';
 
+import { OverlayImage, PathCanvas } from 'svg-path-canvas'
+
 export default class extends React.Component {
     constructor(props) {
         super(props);
@@ -69,7 +71,7 @@ export default class extends React.Component {
             isPositionOutside,
             isLocked
         } = this.props;
-        
+
         const willIsActiveChange = isActive !== nextProps.isActive;
         const willIsPositionOutsideChange = isPositionOutside !== nextProps.isPositionOutside;
 
@@ -212,21 +214,52 @@ export default class extends React.Component {
         } = this.props;
 
         const component = (
-            <div { ...{
-                className: containerClassName,
-                style: this.containerStyle
-            }}>
-                <img { ...{
-                    alt,
-                    className: imageClassName,
-                    src: largeImage.src,
-                    srcSet: largeImage.srcSet,
-                    sizes: largeImage.sizes,
-                    style: this.imageStyle,
-                    onLoad,
-                    onError
-                }}/>
-            </div>
+            <OverlayImage
+                { ...{
+                    className: containerClassName,
+                    style: this.containerStyle
+                }}
+                imageComponent={
+                    <img { ...{
+                        alt,
+                        className: imageClassName,
+                        src: largeImage.src,
+                        srcSet: largeImage.srcSet,
+                        sizes: largeImage.sizes,
+                        style: this.imageStyle,
+                        onLoad,
+                        onError
+                    }}/>
+                }
+                overlayComponent={
+                    (() => {
+                        let imgStyle = this.imageStyle
+                        let imageCoordinates;
+
+                        const { isLocked } = this.props
+                        if (isLocked && this.state.lockedPosition !== null) {
+                            imageCoordinates = this.state.lockedPosition
+                        } else {
+                            imageCoordinates = this.getImageCoordinates()
+                        }
+
+                        return <PathCanvas
+                            pathProps={{ stroke: 'red', fill: 'transparent' }}
+                            paths={this.state.paths}
+                            onPathFinish={(finishedPath, allPaths) => {
+                                this.setState({
+                                    paths: allPaths
+                                })
+                            }}
+                            width={imgStyle.width}
+                            height={imgStyle.height}
+                            style={{
+                                transform: `translate(${imageCoordinates.x}px, ${imageCoordinates.y}px)`
+                            }}
+                        />
+                    })()
+                }
+            />
         );
 
         if (isLazyLoaded) {
