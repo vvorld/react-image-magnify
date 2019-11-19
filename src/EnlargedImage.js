@@ -213,9 +213,6 @@ export default class extends React.Component {
             },
         } = this.props;
 
-        // eslint-disable-next-line no-console
-        console.log(this.props)
-
         const component = (
             <OverlayImage
                 { ...{
@@ -236,11 +233,23 @@ export default class extends React.Component {
                 }
                 overlayComponent={
                     (() => {
-                        let style = this.containerStyle
+                        let imgStyle = this.imageStyle
+                        let imageCoordinates;
+
+                        const { isLocked } = this.props
+                        if (isLocked && this.state.lockedPosition !== null) {
+                            imageCoordinates = this.state.lockedPosition
+                        } else {
+                            imageCoordinates = this.getImageCoordinates()
+                        }
+
                         return <PathCanvas
                             pathProps={{ stroke: 'red', fill: 'transparent' }}
-                            width={style.width}
-                            height={style.height}
+                            width={imgStyle.width}
+                            height={imgStyle.height}
+                            style={{
+                                transform: `translate(${imageCoordinates.x}px, ${imageCoordinates.y}px)`
+                            }}
                         />
                     })()
                 }
