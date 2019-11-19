@@ -14,6 +14,8 @@ import {
     getEnlargedImageStyle
 } from './lib/styles';
 
+import { OverlayImage, PathCanvas } from 'svg-path-canvas'
+
 export default class extends React.Component {
     constructor(props) {
         super(props);
@@ -69,7 +71,7 @@ export default class extends React.Component {
             isPositionOutside,
             isLocked
         } = this.props;
-        
+
         const willIsActiveChange = isActive !== nextProps.isActive;
         const willIsPositionOutsideChange = isPositionOutside !== nextProps.isPositionOutside;
 
@@ -211,22 +213,38 @@ export default class extends React.Component {
             },
         } = this.props;
 
+        // eslint-disable-next-line no-console
+        console.log(this.props)
+
         const component = (
-            <div { ...{
-                className: containerClassName,
-                style: this.containerStyle
-            }}>
-                <img { ...{
-                    alt,
-                    className: imageClassName,
-                    src: largeImage.src,
-                    srcSet: largeImage.srcSet,
-                    sizes: largeImage.sizes,
-                    style: this.imageStyle,
-                    onLoad,
-                    onError
-                }}/>
-            </div>
+            <OverlayImage
+                { ...{
+                    className: containerClassName,
+                    style: this.containerStyle
+                }}
+                imageComponent={
+                    <img { ...{
+                        alt,
+                        className: imageClassName,
+                        src: largeImage.src,
+                        srcSet: largeImage.srcSet,
+                        sizes: largeImage.sizes,
+                        style: this.imageStyle,
+                        onLoad,
+                        onError
+                    }}/>
+                }
+                overlayComponent={
+                    (() => {
+                        let style = this.containerStyle
+                        return <PathCanvas
+                            pathProps={{ stroke: 'red', fill: 'transparent' }}
+                            width={style.width}
+                            height={style.height}
+                        />
+                    })()
+                }
+            />
         );
 
         if (isLazyLoaded) {
