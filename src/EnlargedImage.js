@@ -14,7 +14,7 @@ import {
     getEnlargedImageStyle
 } from './lib/styles';
 
-import { OverlayImage, PathCanvas } from 'svg-path-canvas'
+import { OverlayImage, CircleCanvas } from 'svg-path-canvas'
 
 export default class extends React.Component {
     constructor(props) {
@@ -243,14 +243,15 @@ export default class extends React.Component {
                             imageCoordinates = this.getImageCoordinates()
                         }
 
-                        return <PathCanvas
-                            pathProps={{ stroke: 'red', fill: 'transparent' }}
-                            paths={this.state.paths}
-                            onPathFinish={(finishedPath, allPaths) => {
-                                this.setState({
-                                    paths: allPaths
-                                })
-                            }}
+                        return <CircleCanvas
+                            circleProps={{ fill: 'red' }}
+                            // circles={this.state.circles}
+                            // onPathFinish={(finishedPath, allPaths) => {
+                            //     this.setState({
+                            //         paths: allPaths
+                            //     })
+                            // }}
+                            initialRadius={5}
                             width={imgStyle.width}
                             height={imgStyle.height}
                             style={{
