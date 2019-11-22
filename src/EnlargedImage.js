@@ -244,7 +244,7 @@ export default class extends React.Component {
                         }
 
                         return <CircleCanvas
-                            circleProps={{ fill: 'red' }}
+                            circleProps={{ fill: 'rgba(255, 0, 0, 0.5)' }}
                             // circles={this.state.circles}
                             // onPathFinish={(finishedPath, allPaths) => {
                             //     this.setState({
