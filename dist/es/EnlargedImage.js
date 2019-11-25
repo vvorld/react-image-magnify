@@ -18,7 +18,7 @@ import { noop } from './utils';
 import Point from './prop-types/Point';
 import { getEnlargedImageContainerStyle, getEnlargedImageStyle } from './lib/styles';
 
-import { OverlayImage, PathCanvas } from 'svg-path-canvas';
+import { OverlayImage, CircleCanvas } from 'svg-path-canvas';
 
 var _class = function (_React$Component) {
     _inherits(_class, _React$Component);
@@ -170,14 +170,15 @@ var _class = function (_React$Component) {
                         imageCoordinates = _this3.getImageCoordinates();
                     }
 
-                    return React.createElement(PathCanvas, {
-                        pathProps: { stroke: 'red', fill: 'transparent' },
-                        paths: _this3.state.paths,
-                        onPathFinish: function onPathFinish(finishedPath, allPaths) {
-                            _this3.setState({
-                                paths: allPaths
-                            });
-                        },
+                    return React.createElement(CircleCanvas, {
+                        circleProps: { fill: 'rgba(255, 0, 0, 0.5)' }
+                        // circles={this.state.circles}
+                        // onPathFinish={(finishedPath, allPaths) => {
+                        //     this.setState({
+                        //         paths: allPaths
+                        //     })
+                        // }}
+                        , initialRadius: 5,
                         width: imgStyle.width,
                         height: imgStyle.height,
                         style: {

@@ -190,14 +190,15 @@ var _class = function (_React$Component) {
                         imageCoordinates = _this3.getImageCoordinates();
                     }
 
-                    return _react2.default.createElement(_svgPathCanvas.PathCanvas, {
-                        pathProps: { stroke: 'red', fill: 'transparent' },
-                        paths: _this3.state.paths,
-                        onPathFinish: function onPathFinish(finishedPath, allPaths) {
-                            _this3.setState({
-                                paths: allPaths
-                            });
-                        },
+                    return _react2.default.createElement(_svgPathCanvas.CircleCanvas, {
+                        circleProps: { fill: 'rgba(255, 0, 0, 0.5)' }
+                        // circles={this.state.circles}
+                        // onPathFinish={(finishedPath, allPaths) => {
+                        //     this.setState({
+                        //         paths: allPaths
+                        //     })
+                        // }}
+                        , initialRadius: 5,
                         width: imgStyle.width,
                         height: imgStyle.height,
                         style: {
