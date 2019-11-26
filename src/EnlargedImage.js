@@ -211,9 +211,10 @@ export default class extends React.Component {
                 onLoad = noop,
                 onError = noop
             },
+            enableSegmentation
         } = this.props;
 
-        const component = (
+        const component = enableSegmentation ? (
             <OverlayImage
                 { ...{
                     className: containerClassName,
@@ -261,6 +262,22 @@ export default class extends React.Component {
                     })()
                 }
             />
+        ) : (
+            <div { ...{
+                className: containerClassName,
+                style: this.containerStyle
+            }}>
+                <img { ...{
+                    alt,
+                    className: imageClassName,
+                    src: largeImage.src,
+                    srcSet: largeImage.srcSet,
+                    sizes: largeImage.sizes,
+                    style: this.imageStyle,
+                    onLoad,
+                    onError
+                }}/>
+            </div>
         );
 
         if (isLazyLoaded) {
