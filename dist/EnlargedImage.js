@@ -161,10 +161,11 @@ var _class = function (_React$Component) {
                 _props3$largeImage$on = _props3$largeImage.onLoad,
                 onLoad = _props3$largeImage$on === undefined ? _utils.noop : _props3$largeImage$on,
                 _props3$largeImage$on2 = _props3$largeImage.onError,
-                onError = _props3$largeImage$on2 === undefined ? _utils.noop : _props3$largeImage$on2;
+                onError = _props3$largeImage$on2 === undefined ? _utils.noop : _props3$largeImage$on2,
+                enableSegmentation = _props3.enableSegmentation;
 
 
-            var component = _react2.default.createElement(_svgPathCanvas.OverlayImage, _extends({
+            var component = enableSegmentation ? _react2.default.createElement(_svgPathCanvas.OverlayImage, _extends({
                 className: containerClassName,
                 style: this.containerStyle
             }, {
@@ -206,7 +207,23 @@ var _class = function (_React$Component) {
                         }
                     });
                 }()
-            }));
+            })) : _react2.default.createElement(
+                'div',
+                {
+                    className: containerClassName,
+                    style: this.containerStyle
+                },
+                _react2.default.createElement('img', {
+                    alt: alt,
+                    className: imageClassName,
+                    src: largeImage.src,
+                    srcSet: largeImage.srcSet,
+                    sizes: largeImage.sizes,
+                    style: this.imageStyle,
+                    onLoad: onLoad,
+                    onError: onError
+                })
+            );
 
             if (isLazyLoaded) {
                 return this.isVisible ? component : null;

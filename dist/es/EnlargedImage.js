@@ -141,10 +141,11 @@ var _class = function (_React$Component) {
                 _props3$largeImage$on = _props3$largeImage.onLoad,
                 onLoad = _props3$largeImage$on === undefined ? noop : _props3$largeImage$on,
                 _props3$largeImage$on2 = _props3$largeImage.onError,
-                onError = _props3$largeImage$on2 === undefined ? noop : _props3$largeImage$on2;
+                onError = _props3$largeImage$on2 === undefined ? noop : _props3$largeImage$on2,
+                enableSegmentation = _props3.enableSegmentation;
 
 
-            var component = React.createElement(OverlayImage, _extends({
+            var component = enableSegmentation ? React.createElement(OverlayImage, _extends({
                 className: containerClassName,
                 style: this.containerStyle
             }, {
@@ -186,7 +187,23 @@ var _class = function (_React$Component) {
                         }
                     });
                 }()
-            }));
+            })) : React.createElement(
+                'div',
+                {
+                    className: containerClassName,
+                    style: this.containerStyle
+                },
+                React.createElement('img', {
+                    alt: alt,
+                    className: imageClassName,
+                    src: largeImage.src,
+                    srcSet: largeImage.srcSet,
+                    sizes: largeImage.sizes,
+                    style: this.imageStyle,
+                    onLoad: onLoad,
+                    onError: onError
+                })
+            );
 
             if (isLazyLoaded) {
                 return this.isVisible ? component : null;
