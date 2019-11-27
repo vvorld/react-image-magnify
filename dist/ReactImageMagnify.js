@@ -182,7 +182,8 @@ var ReactImageMagnify = function (_React$Component) {
                 isHintEnabled = _props.isHintEnabled,
                 hintTextMouse = _props.hintTextMouse,
                 hintTextTouch = _props.hintTextTouch,
-                shouldHideHintAfterFirstActivation = _props.shouldHideHintAfterFirstActivation;
+                shouldHideHintAfterFirstActivation = _props.shouldHideHintAfterFirstActivation,
+                enableSegmentation = _props.enableSegmentation;
 
 
             var smallImage = this.smallImage;
@@ -259,7 +260,8 @@ var ReactImageMagnify = function (_React$Component) {
                     isPortalEnabledForTouch: isEnlargedImagePortalEnabledForTouch,
                     isTouchDetected: this.isTouchDetected,
                     isInPlaceMode: this.isInPlaceMode,
-                    isLocked: isLocked
+                    isLocked: isLocked,
+                    enableSegmentation: enableSegmentation
                 })
             );
         }
