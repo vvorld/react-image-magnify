@@ -298,7 +298,8 @@ class ReactImageMagnify extends React.Component {
             isHintEnabled,
             hintTextMouse,
             hintTextTouch,
-            shouldHideHintAfterFirstActivation
+            shouldHideHintAfterFirstActivation,
+            enableSegmentation
         } = this.props;
 
         const smallImage = this.smallImage;
@@ -381,7 +382,8 @@ class ReactImageMagnify extends React.Component {
                     isPortalEnabledForTouch: isEnlargedImagePortalEnabledForTouch,
                     isTouchDetected: this.isTouchDetected,
                     isInPlaceMode: this.isInPlaceMode,
-                    isLocked
+                    isLocked,
+                    enableSegmentation
                 }}/>
             </ReactCursorPosition>
         );
