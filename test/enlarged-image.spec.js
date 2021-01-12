@@ -27,7 +27,8 @@ describe('Enlarged Image', () => {
             isTransitionEntering: false,
             isTransitionActive: false,
             isTransitionLeaving: false,
-            isTransitionDone: false
+            isTransitionDone: false,
+            lockedPosition: null,
         });
     });
 
