@@ -298,7 +298,8 @@ class ReactImageMagnify extends React.Component {
             isHintEnabled,
             hintTextMouse,
             hintTextTouch,
-            shouldHideHintAfterFirstActivation
+            shouldHideHintAfterFirstActivation,
+            lockByClick
         } = this.props;
 
         const smallImage = this.smallImage;
@@ -341,11 +342,13 @@ class ReactImageMagnify extends React.Component {
                     onLoad: this.onSmallImageLoad,
                     onError,
                     onClick: () => {
-                        this.setState(
-                            (prevState) => {
-                                prevState.isLocked = !prevState.isLocked;
-                                return prevState;
-                            })
+                        if(lockByClick) {
+                            this.setState(
+                                (prevState) => {
+                                    prevState.isLocked = !prevState.isLocked;
+                                    return prevState;
+                                })
+                        }
                     }
                 }} />
                 {isHintEnabled &&
